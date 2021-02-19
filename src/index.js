@@ -9,24 +9,28 @@ function useFetch(uri) {
 
   useEffect(() => {
     if (!uri) return;
-    fetch(uri)
-      .then((data) => data.json())
-      .then(setData)
-      .then(() => setLoading(false))
-      .catch((error) => setError);
-  }, [uri]);
 
-  const result = { loading, data, error };
-  return result;
+    fetch(uri)
+        .then((data) => data.json())
+        .then(setData)
+        .then(() => setLoading(false))
+        .catch((error) => setError);   
+  }, [uri]); 
+    
+    var result = { loading, data, error };
+    return result;
 }
 
 function App() {
-  const { loading, data, error } = useFetch("api.github.com/users/timeonator");
+  const { loading, data, error } = useFetch("https://api.github.com/users/timeonator/repos"
+    //   "https://api.github.com/users/timeonator"
+      );
   if (loading) return <h1>loading ...</h1>;
-  if (error) return <pre>{JSON.stringify(error, null, 2)}</pre>;
+  if (error) return <pre>Error: {JSON.stringify(error, null, 2)}</pre>;
+  console.log(data);
   return (
     <div>
-      <pre>{JSON.stringify(data)}</pre>
+      <pre>Success: {JSON.stringify(data)}</pre>
     </div>
   );
 }
@@ -38,3 +42,4 @@ ReactDOM.render(
   </StrictMode>,
   rootElement
 );
+
